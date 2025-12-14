@@ -10,6 +10,14 @@
 /node_modules
 npm-debug.log
 yarn-error.log
+*.log
+
+# Security & Environment Variables (MUITO IMPORTANTE)
+.env
+.env.local
+.env.*.local
+*.key
+*.pem
 
 # IDEs and editors
 .idea/
@@ -19,6 +27,8 @@ yarn-error.log
 *.launch
 .settings/
 *.sublime-workspace
+*.swp
+*.swo
 
 # Visual Studio Code
 .vscode/*
@@ -26,7 +36,7 @@ yarn-error.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
-.history/*
+.history/
 
 # Miscellaneous
 /.angular/cache
@@ -36,8 +46,19 @@ yarn-error.log
 /libpeerconnection.log
 testem.log
 /typings
-__screenshots__/
 
-# System files
+# Testing Artifacts (Cypress / Playwright)
+/cypress/videos
+/cypress/screenshots
+/playwright-report
+/test-results
+
+# System files (Windows / Mac / Linux)
 .DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
 Thumbs.db
+Desktop.ini
