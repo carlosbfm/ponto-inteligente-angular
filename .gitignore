@@ -30,12 +30,8 @@ yarn-error.log
 *.swp
 *.swo
 
-# Visual Studio Code
-.vscode/*
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
-!.vscode/extensions.json
+# Visual Studio Code (Agora ignora tudo da pasta)
+.vscode/
 .history/
 
 # Miscellaneous
