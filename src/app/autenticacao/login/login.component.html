@@ -1,0 +1,58 @@
+ 
+ 
+ <div class="header-container">
+    <h2 class="title">LOGIN DO PONTO INTELIGENTE</h2>
+  </div>
+
+<form [formGroup]="form" (ngSubmit)="logar()" class="login-container">
+  
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Email</mat-label>
+    <input matInput 
+           placeholder="Digite seu email" 
+           formControlName="email">
+    <mat-error *ngIf="form.get('email')?.invalid">
+      Email inválido
+    </mat-error>
+  </mat-form-field>
+
+  <div class="senha-container">
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Senha</mat-label>
+      <input matInput 
+             type="password" 
+             placeholder="Digite sua senha" 
+             formControlName="senha">
+      <mat-error *ngIf="form.get('senha')?.invalid">
+        Mínimo de 6 caracteres
+      </mat-error>
+    </mat-form-field>
+
+    <mat-icon matTooltip="A senha deve conter ao menos 6 caracteres" 
+              class="help-icon">
+      help
+    </mat-icon>
+  </div>
+
+  <div class="actions">
+    <button mat-raised-button 
+            color= "primary" 
+            type="submit"
+            [disabled]="form.invalid">
+      Entrar
+    </button>
+
+    <div class="register">
+        <a mat-button color="primary" routerLink="/cadastro-pf">
+            Cadastrar PF
+        </a>
+
+        <a mat-button color="primary" routerLink="/cadastro-pj">
+            Cadastrar PJ
+        </a>
+    </div>
+
+    
+  </div>
+
+</form>
