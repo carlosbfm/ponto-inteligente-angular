@@ -1,0 +1,106 @@
+.form-content {
+  width: 450px;
+  background-color: #5c595c;
+  border: 1px solid #56285a;
+  border-radius: 10px;
+  margin-bottom: 40px;
+  
+}
+
+.full-width {
+  width: 100%;
+}
+
+mat-list-item {
+  height: 75px !important;
+  padding: 15px;
+}
+
+mat-list-item ::ng-deep .mat-mdc-list-item-unscoped-content {
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.button-container {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+mat-icon {
+  cursor: help;
+  color: #d2cece;
+}
+
+::ng-deep input:-webkit-autofill,
+::ng-deep input:-webkit-autofill:hover, 
+::ng-deep input:-webkit-autofill:focus, 
+::ng-deep input:-webkit-autofill:active {
+    transition: background-color 50000s ease-in-out 0s;
+    -webkit-text-fill-color: black !important;
+}
+
+::ng-deep .mdc-text-field__input {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
+
+::ng-deep .mdc-floating-label, 
+::ng-deep .mat-mdc-floating-label {
+  color: #d2cece !important;
+}
+
+::ng-deep .mdc-text-field--focused .mdc-floating-label {
+  color: #ffffff !important;
+}
+
+::ng-deep .mat-mdc-form-field-flex {
+  padding: 0 5px !important;
+  align-items: center !important;
+}
+
+::ng-deep .mdc-line-ripple::before {
+  border-bottom-color: #d2cece !important;
+}
+
+::ng-deep .mdc-line-ripple::after {
+  border-bottom-color: #ffffff !important;
+}
+
+::ng-deep .mat-mdc-input-element::placeholder {
+  color: #d2cece !important;
+}
+
+::ng-deep .mat-mdc-text-field-wrapper {
+  height: 50px !important;
+  padding: 0 8px !important;
+}
+
+::ng-deep .mat-mdc-form-field-infix {
+  min-height: 40px !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  display: flex !important;
+  align-items: center !important;
+}
+
+::ng-deep .mdc-floating-label, 
+::ng-deep .mat-mdc-floating-label {
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+  line-height: normal !important;
+  font-size: 14 !important;
+}
+
+::ng-deep .mdc-text-field--focused .mdc-floating-label,
+::ng-deep .mdc-text-field--filled .mdc-floating-label {
+  top: 6px !important;
+  font-size: 12px !important;
+  transform: translateY(0) !important;
+}
+
+::ng-deep .mat-mdc-input-element {
+  margin-top: 20px !important;
+  font-size: 14px !important;
+}

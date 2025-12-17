@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 
-import { CadastrarPjService } from './cadastro-pj'; 
+import { CadastrarPfService } from './cadastrar-pf';
 
 describe('CadastrarPjService', () => {
-  let service: CadastrarPjService;
+  let service: CadastrarPfService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -12,10 +12,10 @@ describe('CadastrarPjService', () => {
         HttpClientTestingModule 
       ],
       providers: [
-        CadastrarPjService
+        CadastrarPfService
       ]
     });
-    service = TestBed.inject(CadastrarPjService);
+    service = TestBed.inject(CadastrarPfService);
   });
 
   it('should be created', () => {
