@@ -12,7 +12,7 @@ import { Login } from '../models/login.model';
 export class LoginService {
 
   private http = inject(HttpClient); // Injeção de dependência moderna
-  private readonly PATH: string = 'auth';
+  private readonly PATH: string = '/auth';
 
   constructor() { }
 
