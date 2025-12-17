@@ -1,0 +1,34 @@
+.app-toolbar {
+  background-color: #54364e;
+  color: white;
+}
+
+.toolbar-spacer {
+  flex: 1 1 auto;
+}
+
+.app-toolbar mat-icon {
+  color: white;
+}
+
+.header-login {
+  background-color: #54364e;
+  width: 100%;
+  height: 135px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 30px;
+}
+
+.header-login h1 {
+   color: #d2cece;
+   font-size: 30px;
+   font-weight: bold;
+   margin: 0;
+}
+
+.main-content {
+  height: 100%;
+  width: 100%;
+}
