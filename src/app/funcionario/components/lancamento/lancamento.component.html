@@ -1,0 +1,60 @@
+<div class="container-lancamento">
+  
+  <mat-list role="list">
+    
+    <mat-list-item role="listitem" class="centralizado">
+      <a mat-button color="warn" routerLink="/funcionario/listagem">
+        <mat-icon>history</mat-icon>
+        Ver histórico de lançamentos
+      </a>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+      <span class="label">Data:</span> 
+      <span>{{ dataAtual }}</span>
+    </mat-list-item>
+
+    <mat-list-item role="listitem">
+      <span class="label">Localização:</span> 
+      <span class="geo-text">{{ geoLocation }}</span>
+      
+      <a mat-icon-button color="primary" 
+         target="_blank" 
+         *ngIf="geoLocation"
+         [href]="obterUrlMapa()"
+         matTooltip="Ver no Google Maps">
+         <mat-icon>map</mat-icon>
+      </a>
+    </mat-list-item>
+
+    <div class="area-botoes">
+      
+      <mat-list-item *ngIf="exibirInicioTrabalho()" class="centralizado">
+        <button mat-raised-button color="primary" class="btn-acao" (click)="iniciarTrabalho()">
+          <mat-icon>work</mat-icon> Iniciar Trabalho
+        </button>
+      </mat-list-item>
+
+      <mat-list-item *ngIf="exibirInicioAlmoco()" class="centralizado">
+        <button mat-raised-button color="accent" class="btn-acao" (click)="iniciarAlmoco()">
+          <mat-icon>restaurant</mat-icon> Iniciar Almoço
+        </button>
+      </mat-list-item>
+
+      <mat-list-item *ngIf="exibirTerminoAlmoco()" class="centralizado">
+        <button mat-raised-button color="accent" class="btn-acao" (click)="terminarAlmoco()">
+          <mat-icon>restaurant_menu</mat-icon> Terminar Almoço
+        </button>
+      </mat-list-item>
+
+      <mat-list-item *ngIf="exibirTerminoTrabalho()" class="centralizado">
+        <button mat-raised-button color="warn" class="btn-acao" (click)="terminarTrabalho()">
+          <mat-icon>work_off</mat-icon> Terminar Trabalho
+        </button>
+      </mat-list-item>
+
+    </div>
+
+  </mat-list>
+
+</div>

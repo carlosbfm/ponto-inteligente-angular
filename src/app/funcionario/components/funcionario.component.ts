@@ -10,9 +10,8 @@ import { RouterOutlet } from '@angular/router';
     RouterOutlet
   ],
   template: `
-  
-    <h2 style="text-align: center;">Controle de Ponto</h2>
-    <router-outlet></router-outlet>
-  `
+  <h2 style="text-align: center; font-size: 30px;">Controle de Ponto</h2>
+  <router-outlet></router-outlet>
+`
 })
 export class FuncionarioComponent {}

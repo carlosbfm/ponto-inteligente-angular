@@ -30,7 +30,7 @@ export const routes: Routes = [
     path: 'funcionario',
     component: FuncionarioComponent,
     children: [
-      { path: '', component: ListagemComponent }, 
+      { path: '', component: LancamentoComponent }, 
       { path: 'listagem', component: ListagemComponent },
       { path: 'lancamento', component: LancamentoComponent }
     ]
