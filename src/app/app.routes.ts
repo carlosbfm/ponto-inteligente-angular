@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { adminGuard } from './admin/services/admin-guard';
+import { authGuard } from './shared/services/auth-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
@@ -29,6 +30,7 @@ export const routes: Routes = [
   },
   {
     path: 'funcionario',
+    canActivate: [authGuard],
     loadComponent: () => import('./funcionario/funcionario.component').then(m => m.FuncionarioComponent),
     children: [
       { 
@@ -47,8 +49,8 @@ export const routes: Routes = [
   },
   {
     path: 'admin',
+    canActivate: [authGuard, adminGuard],
     loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
-    canActivate: [adminGuard],
     children: [
       { 
         path: '', 
