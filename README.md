@@ -1,59 +1,49 @@
-# PontoInteligente
+# Ponto Inteligente - Frontend Angular
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.0.
+Este projeto representa o frontend de um sistema de controle de ponto eletrônico, desenvolvido em **Angular** focado em produtividade, segurança e integração com APIs RESTful.
 
-## Development server
+## 🚀 Tecnologias e Padrões
+* **Angular Moderno**: Uso de **Standalone Components** para uma arquitetura mais leve.
+* **Lazy Loading**: Carregamento sob demanda de rotas para otimização de performance.
+* **Angular Material**: Interface baseada em componentes profissionais (SnackBar, Tabelas, Formulários).
+* **RxJS**: Gerenciamento reativo de dados e requisições HTTP.
 
-To start a local development server, run:
+## 🔒 Segurança de Rotas (Guards)
+O sistema utiliza **Guards Funcionais** (`CanActivateFn`) para garantir a integridade do acesso:
 
-```bash
-ng serve
-```
+* **AuthGuard**: Protege as rotas internas. Caso o usuário não possua um token válido, ele é redirecionado ao login com a mensagem "Por favor, faça o login" via `MatSnackBar`.
+* **AdminGuard**: Valida se o usuário autenticado possui o perfil `ROLE_ADMIN` antes de permitir o acesso às funcionalidades de gestão.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+[Image of Angular router navigation guard flow with login redirect]
 
-## Code scaffolding
+## 🛠️ Configuração de Desenvolvimento e CORS
+Para evitar erros de **CORS** (Cross-Origin Resource Sharing) durante o desenvolvimento, o projeto utiliza um **Servidor Proxy**:
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+1.  **Arquivo `proxy.conf.json`**: Redireciona chamadas feitas para `/api` para o backend no `localhost:8080`.
+2.  **Ambientes Dinâmicos**: O `environment.development.ts` está configurado para utilizar o prefixo `/api`, permitindo que o Angular intercepte as requisições e resolva a comunicação entre portas diferentes.
 
-```bash
-ng generate component component-name
-```
+[Image of Angular proxy server architecture]
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## 🏃 Como Rodar o Projeto
+1.  Instale as dependências:
+    ```bash
+    npm install
+    ```
+2.  Inicie o servidor com o proxy ativo:
+    ```bash
+    npm start
+    ```
+    *Nota: O comando `npm start` foi configurado para rodar `ng serve --proxy-config proxy.conf.json`.*
 
-```bash
-ng generate --help
-```
+## 📂 Estrutura de Pastas
+* `src/app/autenticacao`: Fluxos de Login e Cadastro (PF/PJ).
+* `src/app/funcionario`: Visualização de lançamentos e registro de ponto.
+* `src/app/admin`: Edição, exclusão e gestão de pontos.
+* `src/app/shared`: Serviços base, modelos de dados e guardas de segurança.
 
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Karma](https://karma-runner.github.io) test runner, use the following command:
-
-```bash
-ng test
-```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 📄 Funcionalidades Implementadas
+- [x] Autenticação via JWT.
+- [x] Cadastro de Pessoa Física e Jurídica.
+- [x] Lançamento de pontos com localização temporal.
+- [x] Listagem paginada de registros.
+- [x] Proteção hierárquica de rotas.
