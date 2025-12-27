@@ -1,0 +1,42 @@
+.atualizacao-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.form-content {
+  width: 100%;
+  max-width: 400px; 
+  display: flex;
+  flex-direction: column;
+  gap: 10px; 
+}
+
+.full-width {
+  width: 100%;
+}
+
+.time-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.time-field {
+  flex: 1; 
+}
+
+.time-separator {
+  font-weight: bold;
+  font-size: 1.2rem;
+  margin-bottom: 20px; 
+}
+
+.actions {
+  display: flex;
+  justify-content: center; 
+  gap: 10px;
+  margin-top: 20px;
+}

@@ -1,0 +1,66 @@
+<div class="atualizacao-container">
+  <h2>Atualizar Lançamento</h2>
+
+  <form [formGroup]="form" novalidate class="form-content">
+    
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Data</mat-label>
+      <input matInput [matDatepicker]="picker" formControlName="data" readonly>
+      <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+      <mat-datepicker touchUi #picker></mat-datepicker>
+      <mat-error *ngIf="form.get('data')?.hasError('required')">
+        Data é obrigatória.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="time-container">
+      <mat-form-field appearance="outline" class="time-field">
+        <mat-label>Horas</mat-label>
+        <mat-select formControlName="horas">
+          <mat-option *ngFor="let hora of horas" [value]="hora">
+            {{ hora }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('horas')?.hasError('required')">
+          Obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <span class="time-separator">:</span>
+
+      <mat-form-field appearance="outline" class="time-field">
+        <mat-label>Minutos</mat-label>
+        <mat-select formControlName="minutos">
+          <mat-option *ngFor="let minuto of minutos" [value]="minuto">
+            {{ minuto }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('minutos')?.hasError('required')">
+          Obrigatório.
+        </mat-error>
+      </mat-form-field>
+    </div>
+
+    <mat-form-field appearance="outline" class="full-width">
+      <mat-label>Tipo</mat-label>
+      <mat-select formControlName="tipo">
+        <mat-option *ngFor="let t of tipos" [value]="t">
+          {{ t | type }}
+        </mat-option>
+      </mat-select>
+      <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+        Tipo é obrigatório.
+      </mat-error>
+    </mat-form-field>
+
+    <div class="actions">
+      <button mat-raised-button color="primary" [disabled]="form.invalid" (click)="atualizar()">
+        Atualizar
+      </button>
+      <a mat-button color="primary" routerLink="/admin">
+        Voltar
+      </a>
+    </div>
+
+  </form>
+</div>

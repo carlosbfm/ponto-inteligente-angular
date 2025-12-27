@@ -1,22 +1,25 @@
-import { Component, OnInit, ViewChild, Inject } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
-import { ReactiveFormsModule } from '@angular/forms';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common'; 
+import { RouterModule } from '@angular/router'; 
 
+import { MatSelectModule } from '@angular/material/select';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSortModule, Sort } from '@angular/material/sort';
-import { MatCardModule } from '@angular/material/card';
+import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { PageEvent, MatPaginatorModule } from '@angular/material/paginator';
+import { Sort, MatSortModule } from '@angular/material/sort';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogModule, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
-import { Lancamento } from '../../../shared/models/lancamento.model';
 import { LancamentoService } from '../../../shared/services/lancamento.service';
+import { Lancamento } from '../../../shared/models/lancamento.model';
+import { Funcionario } from '../../../shared/models/funcionario.model';
 import { HttpUtilService } from '../../../shared/services/http-util.service';
-import { TypePipe } from '../../../shared/pipes/type.pipe';
+import { FuncionarioService } from '../../../shared/services/funcionario.service';
+import { TypePipe } from '../../../shared/pipes/type.pipe'; 
 
 @Component({
   selector: 'confirmar-dialog',
@@ -41,17 +44,18 @@ export class ConfirmarDialog {
   standalone: true,
   imports: [
     CommonModule,
-    RouterModule,
     ReactiveFormsModule,
+    RouterModule,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatCardModule,
+    MatSelectModule,
+    MatDialogModule,
     MatButtonModule,
     MatIconModule,
-    MatTooltipModule,
     MatSnackBarModule,
-    MatDialogModule,
+    MatInputModule,
+    MatTooltipModule,
     TypePipe
   ]
 })
@@ -59,10 +63,14 @@ export class ListagemComponent implements OnInit {
 
   dataSource: MatTableDataSource<Lancamento> = new MatTableDataSource<Lancamento>();
   colunas: string[] = ['data', 'tipo', 'localizacao', 'acao'];
-  
+  funcionarioId!: string;
   totalLancamentos: number = 0;
+
+  funcionarios: Funcionario[] = []; 
+  form!: FormGroup;
+
   pagina: number = 0;
-  qtdPorPagina: number = 5;
+  qtdPorPagina: number = 5; 
 
   private ordem: string = 'data';
   private direcao: string = 'DESC';
@@ -71,29 +79,82 @@ export class ListagemComponent implements OnInit {
     private lancamentoService: LancamentoService,
     private httpUtil: HttpUtilService,
     private snackBar: MatSnackBar,
-    private dialog: MatDialog
+    private fb: FormBuilder,
+    private funcionarioService: FuncionarioService,
+    private dialog: MatDialog,
+    private cdr: ChangeDetectorRef
   ) { }
 
   ngOnInit() {
     this.pagina = 0;
-    this.exibirLancamentos();
+    this.ordemPadrao();
+    this.gerarForm();
+    this.obterFuncionarios();
+  }
+
+  gerarForm() {
+    this.form = this.fb.group({
+      funcs: ['', []]
+    });
+  }
+
+  ordemPadrao() {
+    this.ordem = 'data';
+    this.direcao = 'DESC';
+  }
+
+  get funcId(): string {
+    return sessionStorage['funcionarioId'] || '';
+  }
+
+  obterFuncionarios() {
+    this.funcionarioService.listarFuncionariosPorEmpresa()
+      .subscribe({
+        next: (data) => {
+          const usuarioId: string = this.httpUtil.obterIdUsuario();
+          
+          this.funcionarios = (data.data as Funcionario[])
+            .filter(func => func.id != usuarioId);
+          
+          if (this.funcId) {
+            this.form.get('funcs')?.setValue(parseInt(this.funcId, 10));
+            this.exibirLancamentos();
+          }
+          
+          this.cdr.detectChanges(); 
+        },
+        error: (err) => {
+          const msg: string = "Erro obtendo funcionários.";
+          this.snackBar.open(msg, "Erro", { duration: 5000 });
+        }
+      });
   }
 
   exibirLancamentos() {
-    const funcionarioId = this.httpUtil.obterIdUsuario();
+    if (this.form.get('funcs')?.value) {
+      this.funcionarioId = this.form.get('funcs')?.value;
+    } else if (this.funcId) {
+      this.funcionarioId = this.funcId;
+    } else {
+      return;
+    }
 
+    sessionStorage['funcionarioId'] = this.funcionarioId;
+    
+    
     this.lancamentoService.listarLancamentosPorFuncionario(
-        funcionarioId, 
+        this.funcionarioId, 
         this.pagina, 
-        this.qtdPorPagina, 
+        this.qtdPorPagina,
         this.ordem, 
         this.direcao
       )
       .subscribe({
         next: (data) => {
-          this.totalLancamentos = data.data.totalElements;
-          const lancamentos = data.data.content as Lancamento[];
+          this.totalLancamentos = data['data'].totalElements;
+          const lancamentos = data['data'].content as Lancamento[];
           this.dataSource.data = lancamentos;
+          this.cdr.detectChanges();
         },
         error: (err) => {
           const msg: string = "Erro obtendo lançamentos.";
@@ -110,8 +171,7 @@ export class ListagemComponent implements OnInit {
 
   ordenar(sort: Sort) {
     if (sort.direction == '') {
-      this.ordem = 'data';
-      this.direcao = 'DESC';
+      this.ordemPadrao();
     } else {
       this.ordem = sort.active;
       this.direcao = sort.direction.toUpperCase();
@@ -119,7 +179,7 @@ export class ListagemComponent implements OnInit {
     this.exibirLancamentos();
   }
 
-  removerDialog(lancamentoId: string) {
+  removerDialog(lancamentoId: string) {  
     const dialogRef = this.dialog.open(ConfirmarDialog, {});
 
     dialogRef.afterClosed().subscribe(remover => {

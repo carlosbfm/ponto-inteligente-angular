@@ -1,0 +1,68 @@
+<div class="cadastro-container">
+  <div class="content-wrapper mat-elevation-z8">
+    <h2 class="page-title">Cadastrar Lançamento</h2>
+
+    <form [formGroup]="form" (ngSubmit)="cadastrar()" novalidate>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Data</mat-label>
+        <input matInput [matDatepicker]="picker" formControlName="data" readonly>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker touchUi="true"></mat-datepicker>
+        <mat-error *ngIf="form.get('data')?.hasError('required')">
+          Data é obrigatória.
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Tipo</mat-label>
+        <mat-select formControlName="tipo">
+          <mat-option *ngFor="let t of tipos" [value]="t">
+            {{ t | type }}
+          </mat-option>
+        </mat-select>
+        <mat-error *ngIf="form.get('tipo')?.hasError('required')">
+          Tipo é obrigatório.
+        </mat-error>
+      </mat-form-field>
+
+      <div class="time-container">
+        
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Horas</mat-label>
+          <mat-select formControlName="horas">
+            <mat-option *ngFor="let hora of horas" [value]="hora">
+              {{ hora }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('horas')?.hasError('required')">
+            Obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" class="half-width">
+          <mat-label>Minutos</mat-label>
+          <mat-select formControlName="minutos">
+            <mat-option *ngFor="let minuto of minutos" [value]="minuto">
+              {{ minuto }}
+            </mat-option>
+          </mat-select>
+          <mat-error *ngIf="form.get('minutos')?.hasError('required')">
+            Obrigatório.
+          </mat-error>
+        </mat-form-field>
+
+      </div>
+
+      <div class="button-row">
+        <button mat-flat-button color="primary" type="submit" [disabled]="form.invalid">
+          Cadastrar
+        </button>
+        <a mat-stroked-button color="warn" routerLink="/admin">
+          Voltar
+        </a>
+      </div>
+
+    </form>
+  </div>
+</div>

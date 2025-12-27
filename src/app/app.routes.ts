@@ -1,38 +1,67 @@
 import { Routes } from '@angular/router';
-import { LoginComponent } from './autenticacao/login/login.component';
-import { CadastroPjComponent } from './autenticacao/cadastro-pj/cadastro-pj.component';
-import { CadastroPfComponent } from './autenticacao/cadastro-pf/cadastro-pf.component';
-import { CadastrarPj } from './autenticacao/cadastro-pj/components/cadastrar-pj/cadastrar-pj.component';
-import { CadastrarPf } from './autenticacao/cadastro-pf/components/cadastrar-pf/cadastrar-pf.component';
-import { FuncionarioComponent } from './funcionario/components/funcionario.component';
-import { ListagemComponent } from './funcionario/components/listagem/listagem.component';
-import { LancamentoComponent } from './funcionario/components/lancamento/lancamento.component'
+import { adminGuard } from './admin/services/admin-guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: 'login', pathMatch: 'full' },
-  { path: 'login', component: LoginComponent },
+  { 
+    path: 'login', 
+    loadComponent: () => import('./autenticacao/login/login.component').then(m => m.LoginComponent) 
+  },
   {
     path: 'cadastro-pj',
-    component: CadastroPjComponent,
+    loadComponent: () => import('./autenticacao/cadastro-pj/cadastro-pj.component').then(m => m.CadastroPjComponent),
     children: [
-      { path: '', component: CadastrarPj }
+      { 
+        path: '', 
+        loadComponent: () => import('./autenticacao/cadastro-pj/components/cadastrar-pj/cadastrar-pj.component').then(m => m.CadastrarPj) 
+      }
     ]
   },
   {
     path: 'cadastro-pf',
-    component: CadastroPfComponent,
+    loadComponent: () => import('./autenticacao/cadastro-pf/cadastro-pf.component').then(m => m.CadastroPfComponent),
     children: [
-      { path: '', component: CadastrarPf }
+      { 
+        path: '', 
+        loadComponent: () => import('./autenticacao/cadastro-pf/components/cadastrar-pf/cadastrar-pf.component').then(m => m.CadastrarPf) 
+      }
     ]
   },
-
   {
     path: 'funcionario',
-    component: FuncionarioComponent,
+    loadComponent: () => import('./funcionario/funcionario.component').then(m => m.FuncionarioComponent),
     children: [
-      { path: '', component: LancamentoComponent }, 
-      { path: 'listagem', component: ListagemComponent },
-      { path: 'lancamento', component: LancamentoComponent }
+      { 
+        path: '', 
+        loadComponent: () => import('./funcionario/components/lancamento/lancamento.component').then(m => m.LancamentoComponent) 
+      }, 
+      { 
+        path: 'listagem', 
+        loadComponent: () => import('./funcionario/components/listagem/listagem.component').then(m => m.ListagemComponent) 
+      },
+      { 
+        path: 'lancamento', 
+        loadComponent: () => import('./funcionario/components/lancamento/lancamento.component').then(m => m.LancamentoComponent) 
+      }
+    ]
+  },
+  {
+    path: 'admin',
+    loadComponent: () => import('./admin/admin.component').then(m => m.AdminComponent),
+    canActivate: [adminGuard],
+    children: [
+      { 
+        path: '', 
+        loadComponent: () => import('./admin/components/listagem/listagem.component').then(m => m.ListagemComponent) 
+      },
+      { 
+        path: 'cadastro', 
+        loadComponent: () => import('./admin/components/cadastro/cadastro.component').then(m => m.CadastroComponent) 
+      },
+      { 
+        path: 'atualizacao/:lancamentoId', 
+        loadComponent: () => import('./admin/components/atualizacao/atualizacao.component').then(m => m.AtualizacaoComponent) 
+      }
     ]
   }
 ];

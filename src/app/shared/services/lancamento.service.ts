@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { environment as env } from '../../../environments/environment';
 
-import { Lancamento } from '../models'; // Certifique-se que o index.ts existe na pasta models
+import { Lancamento } from '../models/lancamento.model'; 
 import { HttpUtilService } from './http-util.service';
 
 @Injectable({
@@ -11,10 +11,8 @@ import { HttpUtilService } from './http-util.service';
 })
 export class LancamentoService {
 
-  // CORREÇÃO AQUI: A barra '/' garante a separação correta na URL
   private readonly PATH: string = '/lancamentos';
   
-  // Caminhos complementares
   private readonly PATH_ULTIMO_LANC = '/funcionario/{funcionarioId}/ultimo';
   private readonly PATH_LANCAMENTOS = '/funcionario/{funcionarioId}';
   private readonly PATH_TODOS_LANC = '/funcionario/{funcionarioId}/todos';
@@ -53,6 +51,7 @@ export class LancamentoService {
   listarLancamentosPorFuncionario(
       funcionarioId: string,
       pagina: number, 
+      qtdPorPagina: number, 
       ordem: string, 
       direcao: string): Observable<any> {
 
@@ -60,7 +59,9 @@ export class LancamentoService {
       this.PATH_LANCAMENTOS.replace('{funcionarioId}', funcionarioId);
     
     const params: string = '?pag=' + pagina +
-      '&ord=' + ordem + '&dir=' + direcao;
+      '&ord=' + ordem + 
+      '&dir=' + direcao + 
+      '&size=' + qtdPorPagina; 
     
     return this.http.get(url + params, this.httpUtil.headers());
   }
