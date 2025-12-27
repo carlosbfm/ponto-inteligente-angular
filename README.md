@@ -14,7 +14,7 @@ O sistema utiliza **Guards Funcionais** (`CanActivateFn`) para garantir a integr
 * **AuthGuard**: Protege as rotas internas. Caso o usuário não possua um token válido, ele é redirecionado ao login com a mensagem "Por favor, faça o login" via `MatSnackBar`.
 * **AdminGuard**: Valida se o usuário autenticado possui o perfil `ROLE_ADMIN` antes de permitir o acesso às funcionalidades de gestão.
 
-[Image of Angular router navigation guard flow with login redirect]
+
 
 ## 🛠️ Configuração de Desenvolvimento e CORS
 Para evitar erros de **CORS** (Cross-Origin Resource Sharing) durante o desenvolvimento, o projeto utiliza um **Servidor Proxy**:
@@ -22,7 +22,7 @@ Para evitar erros de **CORS** (Cross-Origin Resource Sharing) durante o desenvol
 1.  **Arquivo `proxy.conf.json`**: Redireciona chamadas feitas para `/api` para o backend no `localhost:8080`.
 2.  **Ambientes Dinâmicos**: O `environment.development.ts` está configurado para utilizar o prefixo `/api`, permitindo que o Angular intercepte as requisições e resolva a comunicação entre portas diferentes.
 
-[Image of Angular proxy server architecture]
+
 
 ## 🏃 Como Rodar o Projeto
 1.  Instale as dependências:
